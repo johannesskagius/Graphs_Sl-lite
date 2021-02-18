@@ -1,15 +1,12 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Node {
     private ArrayList<Bow> connectedNodes = new ArrayList<> ();
     private Position position;
     private String location;
-    private boolean isVisited;
+    private boolean isVisited = false;
 
 
     public Node (Position position,String location) {
@@ -17,29 +14,29 @@ public class Node {
         this.location = location;
     }
 
-    public void addBow (Node nodeTo, int weight) {
-        Bow b = new Bow ( this, nodeTo, weight );
+    public void addBow (Node nodeTo,int weight) {
+        Bow b = new Bow ( this,nodeTo,weight );
         connectedNodes.add ( b );
     }
 
-    public boolean gotChilds(){
-        return connectedNodes.size () == 0 ? false: true;
+    public boolean gotChilds () {
+        return connectedNodes.size () == 0 ? false : true;
     }
 
     public ArrayList<Node> getConnectedNodes () {
         ArrayList<Node> connected = new ArrayList<> ();
-        for(Bow x : connectedNodes){
+        for (Bow x : connectedNodes) {
             connected.add ( x.getlNode () );
         }
         return connected;
     }
 
-    public int getCost(int n){
+    public int getCost (int n) {
         return connectedNodes.get ( n ).getWeight ();
     }
 
-    public double calcHeuristicLength(Node n){
-        return position.countHeuristicDistance ( this.position, n.position );
+    public double calcHeuristicLength (Node n) {
+        return position.countHeuristicDistance ( this.position,n.position );
     }
 
     public Position getPosition () {

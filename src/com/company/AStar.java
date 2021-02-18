@@ -1,37 +1,45 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Stack;
 
 public class AStar {
     private Route route = new Route ();
     private Stack<Node> visitedNodes = new Stack<> ();
 
-
     //A* fungerar med
     public Route getPath (Node start,Node end) {
+        visitedNodes.push ( start );
         Node current = start;
         //Kolla om startnode
-        if(!checkIfFinish ( end,current )) {
-            visitedNodes.push ( current );
-            //Kolla om node har barn
-            if (current.gotChilds ()) { // Om det finns barn gå till det billigaste, ej besökta bar
-                //ArrayList<Node> r = getPath ( findCheapestChild ( current,end ),end ).getRouteArray ();
-                Node cheapestChild = findCheapestChild ( current, end );
-                route = getPath ( cheapestChild, end );
-            } else {
-                //TODO Om det inte finns några childnoder gå tillbaka till en tidigare nod och
-                throw new IllegalArgumentException ();
-            }
-        }else{
-            visitedNodes.push ( current );
-            for(Node n : visitedNodes){
-                route.addNode ( n );
+        while (!checkIfFinish ( end,current )) {
+            if (!checkIfFinish ( end,current )) {
+                if(!visitedNodes.peek ().equals ( current ))
+                    visitedNodes.push ( current );
+                //Kolla om node har barn
+                if (current.gotChilds ()) { // Om det finns barn gå till det billigaste, ej besökta bar
+                    //ArrayList<Node> r = getPath ( findCheapestChild ( current,end ),end ).getRouteArray ();
+                    Node cheapestChild = findCheapestChild ( current,end );
+                    current = cheapestChild;
+                } else {
+                    //TODO Om det inte finns några childnoder gå tillbaka till en tidigare nod och
+                    visitedNodes.pop ();
+                    current = visitedNodes.peek ();
+                    throw new IllegalArgumentException ();
+                }
             }
         }
+        convertToRoute(current);
+        resetAllNodes();
         return route.getRoute ();
+    }
+
+    private void convertToRoute (Node current) {
+        visitedNodes.push ( current );
+        for (Node n : visitedNodes) {
+            route.addNode ( n );
+        }
+        visitedNodes.clear ();
     }
 
     private boolean checkIfFinish (Node end,Node current) {
@@ -45,17 +53,26 @@ public class AStar {
         ArrayList<Node> connectedNodes = current.getConnectedNodes ();
         //Get the cheapest unvisitedNode
         double heuristicCost = 0;
-        for (int i = 0; i < connectedNodes.size (); i ++) {
-            heuristicCost = current.getCost ( i )+connectedNodes.get ( i ).calcHeuristicLength ( end);
+        for (int i = 0; i < connectedNodes.size (); i++) {
+            heuristicCost = current.getCost ( i ) + connectedNodes.get ( i ).calcHeuristicLength ( end );
             Node n = connectedNodes.get ( i );
-            if (heuristicCost < HEURISTICMAX && !n.isVisited () || end.equals ( connectedNodes.get ( i ) )){
+            if (heuristicCost < HEURISTICMAX && !n.isVisited () || end.equals ( connectedNodes.get ( i ) )) {
                 HEURISTICMAX = heuristicCost;
                 cheapestConnectedNode = n;
             }
         }
-        if(cheapestConnectedNode == null)
-            return visitedNodes.pop ();
+        if (cheapestConnectedNode == null) {
+            visitedNodes.pop ();
+            cheapestConnectedNode = visitedNodes.peek ();
+        }
         cheapestConnectedNode.setVisited ( true );
         return cheapestConnectedNode;
+    }
+
+    private void resetAllNodes () {
+        ArrayList<Node> xArr = route.getRouteArray ();
+        for(Node x : xArr){
+            x.setVisited ( false );
+        }
     }
 }

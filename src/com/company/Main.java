@@ -4,9 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -147,16 +149,13 @@ public class Main {
     @Test
     public void testASTAR () {
         AStar a = new AStar ();
-//        Route r = a.getPath ( nodes.get ( 'a' ),nodes.get ( 'j' ) );
-//        assertTrue ( r.getEndNode ().equals ( nodes.get ( 'j' ) ) );
-
-//        Route r1 = a.getPath ( nodes.get ( 'c' ),nodes.get ( 'r' ) );
-//        assertTrue ( r1.getEndNode ().equals ( nodes.get ( 'r' ) ) );
-
-//        Route r2 = a.getPath ( nodes.get ( 'p' ),nodes.get ( 'a' ) );
-//        assertTrue ( r2.getEndNode ().equals ( nodes.get ( 'a' ) ) );
-
+        Route r = a.getPath ( nodes.get ( 'a' ),nodes.get ( 'j' ) );
+        assertEquals ( nodes.get ( 'j' ),r.getEndNode () );
+        Route r1 = a.getPath ( nodes.get ( 'c' ),nodes.get ( 'r' ) );
+        assertEquals ( nodes.get ( 'r' ),r1.getEndNode () );
+        Route r2 = a.getPath ( nodes.get ( 'p' ),nodes.get ( 'a' ) );
+        assertEquals ( nodes.get ( 'a' ),r2.getEndNode () );
         Route r3 = a.getPath ( nodes.get ( 'e' ),nodes.get ( 't' ) );
-        assertTrue ( r3.getEndNode ().equals ( nodes.get ( 't' ) ) );
+        assertEquals ( nodes.get ( 't' ),r3.getEndNode () );
     }
 }
