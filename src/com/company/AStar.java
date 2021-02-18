@@ -1,6 +1,8 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class AStar {
@@ -21,11 +23,6 @@ public class AStar {
                     //ArrayList<Node> r = getPath ( findCheapestChild ( current,end ),end ).getRouteArray ();
                     Node cheapestChild = findCheapestChild ( current,end );
                     current = cheapestChild;
-                } else {
-                    //TODO Om det inte finns några childnoder gå tillbaka till en tidigare nod och
-                    visitedNodes.pop ();
-                    current = visitedNodes.peek ();
-                    throw new IllegalArgumentException ();
                 }
             }
         }
@@ -38,8 +35,8 @@ public class AStar {
         visitedNodes.push ( current );
         for (Node n : visitedNodes) {
             route.addNode ( n );
+            visitedNodes.peek ();
         }
-        visitedNodes.clear ();
     }
 
     private boolean checkIfFinish (Node end,Node current) {
