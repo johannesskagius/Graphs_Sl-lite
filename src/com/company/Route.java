@@ -1,6 +1,8 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Route {
@@ -11,21 +13,37 @@ public class Route {
     public Route () {
     }
 
-    protected void addNode(Node node){
+    protected Node addNode(Node node){
         if(route.size ()==0)
             startNode = node;
         route.add ( node );
-        endNode = route.get ( route.size ()-1 );
+        endNode = node;
+        return node;
+    }
+
+    protected Route getRoute(){
+        return this;
+    }
+
+    protected ArrayList<Node> getRouteArray(){
+        return route;
+    }
+
+    public Node getStartNode () {
+        return startNode;
+    }
+
+    public Node getEndNode () {
+        return endNode;
     }
 
     @Override
     public String toString () {
-        String s ="Route{";
-
+        StringBuilder s = new StringBuilder ( "Route: " );
         for(Node n : route){
-            s += "route=" + route + ", startNode=" + startNode + ", endNode=" + endNode;
+            s.append ( n );
         }
-        s+= '}';
-        return s;
+        s.append ( " }" );
+        return s.toString ();
     }
 }

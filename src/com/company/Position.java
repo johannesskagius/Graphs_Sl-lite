@@ -11,7 +11,7 @@ public class Position {
         this.yCoordinate = yCoordinate;
     }
 
-    private double countHeuristicDistance(Position one, Position two){
+    public double countHeuristicDistance(Position one, Position two){
         final int SQUARED = 2;
         int xDiff = one.getxCoordinate ()- two.getxCoordinate ();
         int yDiff = one.getyCoordinate ()- two.getyCoordinate ();
@@ -48,5 +48,10 @@ public class Position {
     @Override
     public int hashCode () {
         return Objects.hash ( xCoordinate,yCoordinate );
+    }
+
+    @Override
+    public String toString () {
+        return "X: " + xCoordinate + ", Y: =" + yCoordinate;
     }
 }

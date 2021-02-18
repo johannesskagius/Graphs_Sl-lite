@@ -2,12 +2,15 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Node {
     private ArrayList<Bow> connectedNodes = new ArrayList<> ();
     private Position position;
     private String location;
+    private boolean isVisited;
+
 
     public Node (Position position,String location) {
         this.position = position;
@@ -19,17 +22,24 @@ public class Node {
         connectedNodes.add ( b );
     }
 
-    public Map<Node, Integer> getConnectedNodes () {
-        Map<Node, Integer> connected = new HashMap<> ();
+    public boolean gotChilds(){
+        return connectedNodes.size () == 0 ? false: true;
+    }
+
+    public ArrayList<Node> getConnectedNodes () {
+        ArrayList<Node> connected = new ArrayList<> ();
         for(Bow x : connectedNodes){
-            connected.put ( x.getlNode (),x.getWeight () );
+            connected.add ( x.getlNode () );
         }
         return connected;
     }
 
-    public double calcHeuristicLength(){
+    public int getCost(int n){
+        return connectedNodes.get ( n ).getWeight ();
+    }
 
-        return 0.0;
+    public double calcHeuristicLength(Node n){
+        return position.countHeuristicDistance ( this.position, n.position );
     }
 
     public Position getPosition () {
@@ -38,6 +48,14 @@ public class Node {
 
     public String getLocation () {
         return location;
+    }
+
+    public boolean isVisited () {
+        return isVisited;
+    }
+
+    public void setVisited (boolean visited) {
+        isVisited = visited;
     }
 
     @Override
@@ -56,5 +74,10 @@ public class Node {
             hashCode += PRIME * x;
         }
         return hashCode;
+    }
+
+    @Override
+    public String toString () {
+        return position + ", " + location;
     }
 }
