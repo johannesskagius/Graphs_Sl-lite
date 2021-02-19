@@ -1,8 +1,6 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 public class AStar {
@@ -14,8 +12,8 @@ public class AStar {
         visitedNodes.push ( start );
         Node current = start;
         //Kolla om startnode
-        while (!checkIfFinish ( end,current )) {
-            if (!checkIfFinish ( end,current )) {
+        while (checkIfFinish ( end,current )) {
+            if (checkIfFinish ( end,current )) {
                 if(!visitedNodes.peek ().equals ( current ))
                     visitedNodes.push ( current );
                 //Kolla om node har barn
@@ -40,13 +38,13 @@ public class AStar {
     }
 
     private boolean checkIfFinish (Node end,Node current) {
-        return current.equals ( end );
+        return !current.equals ( end );
     }
 
     private Node findCheapestChild (Node current,Node end) {//Här vet vi att noden har barn,
         double HEURISTICMAX = 1000000; //Should be infinity;
         Node cheapestConnectedNode = null; // new Node (  );
-        //TODO get the cheapest child if not visited.
+        //Get the cheapest child if not visited.
         ArrayList<Node> connectedNodes = current.getConnectedNodes ();
         //Get the cheapest unvisitedNode
         double heuristicCost = 0;

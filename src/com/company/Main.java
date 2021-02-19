@@ -1,10 +1,12 @@
 package com.company;
 
+import com.company.travelBy.trains.BlueLine;
+import com.company.travelBy.trains.Train;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,104 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Main {
-    private final String[] LOCATIONS = {"Hjulsta","Akalla","Mörby","Ropsten",
-            "Hässelby Strand","Åkeshov","Alvik","Västra skogen","Fridhemsplan","Östermalm",
-            "TC","Kungsträdgården","Mälarhöjden","Liljeholmen","Slussen","Norsborg","Fruängen","Hagsätra","Farsta Strand","Skarpnäck"
-    };
-    private Position[] COORDINATES = {
-            new Position ( 4,13 ),       //A
-            new Position ( 5,13 ),       //B
-            new Position ( 14,13 ),      //C
-            new Position ( 16,13 ),      //D
-            new Position ( 2,9 ),        //E
-            new Position ( 6,9 ),        //F
-            new Position ( 8,9 ),        //g
-            new Position ( 9,10 ),       //H
-            new Position ( 9,9 ),         //i
-            new Position ( 14,9 ),       //J
-            new Position ( 14,8 ),       //K
-            new Position ( 16,8 ),       //L
-            new Position ( 7,6 ),        //m
-            new Position ( 9,6 ),        //n
-            new Position ( 14,6 ),       //o
-            new Position ( 2,2 ),        //p
-            new Position ( 4,2 ),        //q
-            new Position ( 11,2 ),       //r
-            new Position ( 14,2 ),       //s
-            new Position ( 17,2 )        //t
-    };
-    private Map<Character, Node> nodes = new HashMap<> ();
-
+    private NodeList nodeList = new NodeList();
+    private Map<Character, Node> nodes =nodeList.getNodes ();
 
     public static void main (String[] args) {
         // write your code here
     }
 
-    @BeforeAll
-    public void addLocations () {
-        char x = 'a';
-        for (int i = 0; i < 20; i++) {
-            nodes.put ( x,new Node ( COORDINATES[i],LOCATIONS[i] ) );
-            x++;
-        }
-        addConnections ();
-    }
 
-    public void addConnections () {
-        Node a = getNode ( 'a' );
-        Node b = getNode ( 'b' );
-        Node c = getNode ( 'c' );
-        Node d = getNode ( 'd' );
-        Node e = getNode ( 'e' );
-        Node f = getNode ( 'e' );
-        Node h = getNode ( 'h' );
-        Node g = getNode ( 'g' );
-        Node i = getNode ( 'i' );
-        Node j = getNode ( 'j' );
-        Node k = getNode ( 'k' );
-        Node l = getNode ( 'l' );
-        Node m = getNode ( 'm' );
-        Node n = getNode ( 'n' );
-        Node o = getNode ( 'o' );
-        Node p = getNode ( 'p' );
-        Node q = getNode ( 'q' );
-        Node r = getNode ( 'r' );
-        Node s = getNode ( 's' );
-        Node t = getNode ( 't' );
-
-        addBothWays ( h,a,5 );
-        addBothWays ( h,b,3 );
-        addBothWays ( h,i,1 );
-        addBothWays ( e,f,3 );
-        addBothWays ( g,f,1 );
-        addBothWays ( g,i,1 );
-        addBothWays ( j,i,4 );
-        addBothWays ( k,i,1 );
-
-        addBothWays ( j,c,4 );
-        addBothWays ( j,d,5 );
-        addBothWays ( j,k,1 );
-
-        addBothWays ( k,l,1 );
-        addBothWays ( k,o,1 );
-
-        addBothWays ( o,n,5 );
-        addBothWays ( o,r,3 );
-        addBothWays ( o,t,3 );
-        addBothWays ( o,s,2 );
-
-        addBothWays ( n,m,1 );
-        addBothWays ( n,q,5 );
-        addBothWays ( m,p,5 );
-    }
-
-    private Node getNode (Character x) {
-        return nodes.get ( x );
-    }
-
-    private void addBothWays (Node x,Node y,int weight) {
-        x.addBow ( y,weight );
-        y.addBow ( x,weight );
+    @BeforeEach
+    public void getNodes(){
+        nodes = nodeList.getNodes ();
     }
 
 
@@ -136,14 +51,14 @@ public class Main {
 
     @Test
     public void testHeuristicMeasurement () {
-        assertTrue ( (int) nodes.get ( 'a' ).calcHeuristicLength ( nodes.get ( 'f' ) ) == 4 );
-        assertTrue ( (int) nodes.get ( 'd' ).calcHeuristicLength ( nodes.get ( 'e' ) ) == 14 );
-        assertTrue ( (int) nodes.get ( 'p' ).calcHeuristicLength ( nodes.get ( 'f' ) ) == 8 );
-        assertTrue ( (int) nodes.get ( 'a' ).calcHeuristicLength ( nodes.get ( 't' ) ) == 17 );
-        assertTrue ( (int) nodes.get ( 'd' ).calcHeuristicLength ( nodes.get ( 'p' ) ) == 17 );
-        assertTrue ( (int) nodes.get ( 'e' ).calcHeuristicLength ( nodes.get ( 'l' ) ) == 14 );
-        assertTrue ( (int) nodes.get ( 'g' ).calcHeuristicLength ( nodes.get ( 'h' ) ) == 1 );
-        assertTrue ( (int) nodes.get ( 'f' ).calcHeuristicLength ( nodes.get ( 'g' ) ) == 2 );
+        assertEquals ( (int) nodes.get ( 'a' ).calcHeuristicLength ( nodes.get ( 'f' ) ),4 );
+        assertEquals ( (int) nodes.get ( 'd' ).calcHeuristicLength ( nodes.get ( 'e' ) ),14 );
+        assertEquals ( (int) nodes.get ( 'p' ).calcHeuristicLength ( nodes.get ( 'f' ) ),8 );
+        assertEquals ( (int) nodes.get ( 'a' ).calcHeuristicLength ( nodes.get ( 't' ) ),17 );
+        assertEquals ( (int) nodes.get ( 'd' ).calcHeuristicLength ( nodes.get ( 'p' ) ),17 );
+        assertEquals ( (int) nodes.get ( 'e' ).calcHeuristicLength ( nodes.get ( 'l' ) ),14 );
+        assertEquals ( (int) nodes.get ( 'g' ).calcHeuristicLength ( nodes.get ( 'h' ) ),1 );
+        assertEquals ( (int) nodes.get ( 'f' ).calcHeuristicLength ( nodes.get ( 'g' ) ),2 );
     }
 
     @Test
@@ -157,5 +72,15 @@ public class Main {
         assertEquals ( nodes.get ( 'a' ),r2.getEndNode () );
         Route r3 = a.getPath ( nodes.get ( 'e' ),nodes.get ( 't' ) );
         assertEquals ( nodes.get ( 't' ),r3.getEndNode () );
+    }
+
+    @Test
+    public void testBlueTrain(){
+        Train blue = new BlueLine ();
+        int i = blue.getDepartureTimes (nodes.get ( 'k' ), nodes.get ( 'l' ));
+        System.out.println (i);
+
+        int i1 = blue.getDepartureTimes (nodes.get ( 'l' ), nodes.get ( 'i' ));
+        System.out.println ("i1 "+i1);
     }
 }

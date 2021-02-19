@@ -5,8 +5,11 @@ import com.company.Node;
 import java.util.ArrayList;
 
 public interface Status {
-    int getDepartureTimes (Node n);
+    void addRoute();
+    int getDepartureTimes (Node from, Node to);
     ArrayList<Node> route();
     boolean isOnTime();
     String identifier();
+    String lateBy();
+    Node Direction();
 }

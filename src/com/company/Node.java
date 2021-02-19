@@ -1,13 +1,16 @@
 package com.company;
 
+import com.company.travelBy.trains.Train;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Node {
     private ArrayList<Bow> connectedNodes = new ArrayList<> ();
     private Position position;
     private String location;
     private boolean isVisited = false;
-
 
     public Node (Position position,String location) {
         this.position = position;
@@ -20,7 +23,7 @@ public class Node {
     }
 
     public boolean gotChilds () {
-        return connectedNodes.size () == 0 ? false : true;
+        return connectedNodes.size () != 0;
     }
 
     public ArrayList<Node> getConnectedNodes () {

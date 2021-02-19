@@ -2,30 +2,18 @@ package com.company.travelBy.trains;
 
 import com.company.Node;
 import com.company.travelBy.Status;
+import com.company.travelBy.TransportationWay;
 
 import java.util.ArrayList;
 
-public abstract class Train implements Status {
-     public ArrayList<Node> route = new ArrayList<> ();
-     public int nextDepartureTime;
-     public boolean isOnTime;
-     public int delayed;
+public abstract class Train extends TransportationWay {
+    public int nextDepartureTime;
+    public boolean isOnTime;
+    public int delayed;
 
-    public Train (ArrayList<Node> route) {
-        this.route = route;
+    public Train () {
     }
 
-    public ArrayList<Node> getRoute () {
-        return route;
-    }
-
-    public void setRoute (ArrayList<Node> route) {
-        this.route = route;
-    }
-
-    public int getNextDepartureTime () {
-        return nextDepartureTime;
-    }
 
     public void setNextDepartureTime (int nextDepartureTime) {
         this.nextDepartureTime = nextDepartureTime;
