@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.travelBy.trains.Train;
+import com.company.travelBy.TransportationWay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +11,15 @@ public class Node {
     private Position position;
     private String location;
     private boolean isVisited = false;
+    private Map<String, ArrayList<TransportationWay>> station_info = new HashMap<> ();
 
     public Node (Position position,String location) {
         this.position = position;
         this.location = location;
+    }
+
+    public void setStation_info (Map<String, ArrayList<TransportationWay>> station_info) {
+        this.station_info = station_info;
     }
 
     public void addBow (Node nodeTo,int weight) {
@@ -58,6 +63,10 @@ public class Node {
         isVisited = visited;
     }
 
+    public int getStation_info (String identifier) {
+        return station_info.get ( identifier ).get ( 0 ).getDepartureTimes ( this );
+    }
+
     @Override
     public boolean equals (Object o) {
         if (this == o) return true;
@@ -70,7 +79,8 @@ public class Node {
     public int hashCode () {
         int hashCode = 0;
         final int PRIME = 13;
-        for (Character x : location.toCharArray ()) {
+        String hash = location + position.toString ();
+        for (Character x : hash.toCharArray ()) {
             hashCode += PRIME * x;
         }
         return hashCode;
@@ -78,6 +88,6 @@ public class Node {
 
     @Override
     public String toString () {
-        return position + ", " + location;
+        return location;
     }
 }

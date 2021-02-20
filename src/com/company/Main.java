@@ -1,13 +1,11 @@
 package com.company;
 
-import com.company.travelBy.trains.BlueLine;
-import com.company.travelBy.trains.Train;
-import org.junit.jupiter.api.BeforeAll;
+import com.company.travelBy.Train;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Main {
-    private NodeList nodeList = new NodeList();
-    private Map<Character, Node> nodes =nodeList.getNodes ();
+    public static final NodeList nodeList = new NodeList ();
+    private Map<Character, Node> nodes;
+    private Map<String, Train> travelRoute;
 
     public static void main (String[] args) {
         // write your code here
@@ -24,7 +23,7 @@ public class Main {
 
 
     @BeforeEach
-    public void getNodes(){
+    public void getNodesAndTravelWays () {
         nodes = nodeList.getNodes ();
     }
 
@@ -75,12 +74,14 @@ public class Main {
     }
 
     @Test
-    public void testBlueTrain(){
-        Train blue = new BlueLine ();
-        int i = blue.getDepartureTimes (nodes.get ( 'k' ), nodes.get ( 'l' ));
-        System.out.println (i);
+    public void testBlueTrain () {
+        assertEquals ( travelRoute.get ( "Blue line 1").getTrainRoute ().getNrOfStops (), 9 );
+    }
 
-        int i1 = blue.getDepartureTimes (nodes.get ( 'l' ), nodes.get ( 'i' ));
-        System.out.println ("i1 "+i1);
+    @Test
+    public void testAstar_With_Trains () {
+        //Travel_Route t = new Travel_Route ();
+
+
     }
 }

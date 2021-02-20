@@ -1,15 +1,21 @@
 package com.company.travelBy;
 
 import com.company.Node;
-
-import java.util.ArrayList;
+import com.company.NodeList;
 
 public abstract class TransportationWay {
-    public abstract void addRoute();
-    public abstract int getDepartureTimes (Node from,Node to);
-    public abstract ArrayList<Node> route();
+    protected NodeList nodeList;
+    public abstract int getDepartureTimes (Node from);
     public abstract boolean isOnTime();
     public abstract String identifier();
     public abstract String lateBy();
     public abstract Node Direction();
+
+    public NodeList getNodeList () {
+        return nodeList;
+    }
+
+    public void setNodeList (NodeList nodeList) {
+        this.nodeList = nodeList;
+    }
 }

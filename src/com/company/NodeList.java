@@ -112,7 +112,15 @@ public class NodeList {
         addBothWays ( n,m,1 );
         addBothWays ( n,q,5 );
         addBothWays ( m,p,5 );
+
+        addStationInfo();
+
     }
+
+    private void addStationInfo () {
+
+    }
+
 
     private Node getNode (Character x) {
         return nodes.get ( x );
