@@ -7,9 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TravelWays_Support {
-    private NodeList n = Main.nodeList;
     private final Map<String, Train> travelWay = new HashMap<> ();
-    private final Map<Node, ArrayList<Train>> stations = new HashMap<> ();
+    private final Map<Node, ArrayList<Train>> nodesWithTrainConnectin = new HashMap<> ();
+    private final Map<Train, ArrayList<Node>> trains = new HashMap<> ();
+    private NodeList n = Main.nodeList;
     private Train blue1;
     private Train blue2;
     private Train green1;
@@ -26,32 +27,50 @@ public class TravelWays_Support {
         greenLine3Route ();
         red1Line1Route ();
         red1Line2Route ();
-        addStations(blue1);
-        addStations(blue2);
-        addStations(green1);
-        addStations(green2);
-        addStations(green3);
-        addStations(red1);
-        addStations(red2);
+        addStationsByTrain ( blue1 );
+        addStationsByTrain ( blue2 );
+        addStationsByTrain ( green1 );
+        addStationsByTrain ( green2 );
+        addStationsByTrain ( green3 );
+        addStationsByTrain ( red1 );
+        addStationsByTrain ( red2 );
+        addTrainbyStation ( blue1 );
+        addTrainbyStation ( blue2 );
+        addTrainbyStation ( green1 );
+        addTrainbyStation ( green2 );
+        addTrainbyStation ( green3 );
+        addTrainbyStation ( red1 );
+        addTrainbyStation ( red2 );
     }
 
-    private void addStations (Train t) {
+    private void addStationsByTrain (Train t) {
         ArrayList<Node> route = t.getTrainRoute ().getRouteArray ();
-        for(Node n : route){
-            stations.computeIfAbsent ( n, v->new ArrayList<> () ).add ( t );
+        for (Node n : route) {
+            nodesWithTrainConnectin.computeIfAbsent ( n,v -> new ArrayList<> () ).add ( t );
         }
     }
 
-    public ArrayList<Train> getPassingTrains(Node n){
-        ArrayList<Train> x = stations.get ( n );
-        return x;
+    private void addTrainbyStation (Train t) {
+        trains.put ( t,t.getTrainRoute ().getRouteArray () );
     }
 
-    public Map<Node, ArrayList<Train>> getStations () {
-        return stations;
+    public Map<Train, ArrayList<Node>> getTrains () {
+        return trains;
     }
 
-    public ArrayList<Train> getPossibleTrains(Node start,Node end){
+    public Map<Node, ArrayList<Train>> getPassingTrains (Node n) {
+        Map<Node, ArrayList<Train>> passingTrains = new HashMap<> ();
+        if (nodesWithTrainConnectin.containsKey ( n )) {
+            passingTrains.put ( n,nodesWithTrainConnectin.get ( n ) );
+        }
+        return passingTrains;
+    }
+
+    public Map<Node, ArrayList<Train>> getNodesWithTrainConnectin () {
+        return nodesWithTrainConnectin;
+    }
+
+    public ArrayList<Train> getPossibleTrains (Node start,Node end) {
         return null;
     }
 
@@ -69,7 +88,7 @@ public class TravelWays_Support {
         red2_route.addNode ( n.getJ () );
         red2_route.addNode ( n.getD () );
         red2 = new Train ( "Red line 2",red2_route );
-        travelWay.put ( red2.getIdentifier (), red2 );
+        travelWay.put ( red2.getIdentifier (),red2 );
     }
 
     private void red1Line1Route () {
@@ -88,7 +107,7 @@ public class TravelWays_Support {
         red1_route.addNode ( n.getJ () );
         red1_route.addNode ( n.getC () );
         red1 = new Train ( "Red line 1",red1_route );
-        travelWay.put ( red1.getIdentifier (), red1 );
+        travelWay.put ( red1.getIdentifier (),red1 );
     }
 
     private void greenLine3Route () {
@@ -106,7 +125,7 @@ public class TravelWays_Support {
         green3_route.addNode ( n.getG () );
         green3 = new Train ( "Green Line 3",green3_route );
 
-        travelWay.put ( green3.getIdentifier (), green3 );
+        travelWay.put ( green3.getIdentifier (),green3 );
 
     }
 
@@ -127,7 +146,7 @@ public class TravelWays_Support {
         green2_route.addNode ( n.getF () );
 
         green2 = new Train ( "Green Line 2",green2_route );
-        travelWay.put ( green2.getIdentifier (), blue2 );
+        travelWay.put ( green2.getIdentifier (),blue2 );
     }
 
     private void greenLine1Route () {
@@ -148,7 +167,7 @@ public class TravelWays_Support {
         green1_route.addNode ( n.getF () );
         green1_route.addNode ( n.getE () );
         green1 = new Train ( "Green Line 1",green1_route );
-        travelWay.put ( green1.getIdentifier (), green1 );
+        travelWay.put ( green1.getIdentifier (),green1 );
     }
 
     private void blueLine1Route () {
@@ -163,7 +182,7 @@ public class TravelWays_Support {
         blue1_route.addNode ( n.getH () );
         blue1_route.addNode ( n.getA () );
         blue1 = new Train ( "Blue line 1",blue1_route );
-        travelWay.put ( blue1.getIdentifier (), blue1 );
+        travelWay.put ( blue1.getIdentifier (),blue1 );
     }
 
     private void blueLine2Route () {
@@ -178,7 +197,7 @@ public class TravelWays_Support {
         blue2_route.addNode ( n.getH () );
         blue2_route.addNode ( n.getB () );
         blue2 = new Train ( "Blue line 2",blue2_route );
-        travelWay.put ( blue2.getIdentifier (), blue2 );
+        travelWay.put ( blue2.getIdentifier (),blue2 );
     }
 
     public NodeList getN () {

@@ -3,6 +3,8 @@ package com.company.travelBy;
 import com.company.Node;
 import com.company.Route;
 
+import java.util.Objects;
+
 
 public class Train {
     private Route trainRoute;
@@ -42,6 +44,19 @@ public class Train {
 
     public String lateBy () {
         return identifier +" is late by "+delayed+"min";
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Train)) return false;
+        Train train = (Train) o;
+        return Objects.equals ( trainRoute,train.trainRoute ) && Objects.equals ( identifier,train.identifier );
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash ( trainRoute,identifier );
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.company;
 import com.company.travelBy.Train;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Route {
     private ArrayList<Node> route = new ArrayList<> ();
@@ -21,8 +22,10 @@ public class Route {
         return node;
     }
 
-    private void checkWhichTrain () {
+    private HashMap<String, ArrayList<Node>> checkWhichTrain () {
 
+
+        return null;
     }
 
     public int getNrOfStops () {

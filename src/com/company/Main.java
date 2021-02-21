@@ -80,7 +80,9 @@ public class Main {
 
     @Test
     public void testAstar_With_Trains () {
-        //Travel_Route t = new Travel_Route ();
+        Travel_Route t = new Travel_Route ();
+
+        t.getTravel_Route ( nodes.get ( 'a' ), nodes.get ( 'h' ) );
 
 
     }
