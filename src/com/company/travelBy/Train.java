@@ -2,28 +2,27 @@ package com.company.travelBy;
 
 import com.company.Node;
 import com.company.Route;
+import com.company.TravelWays_Support;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 
-public class Train {
+public class Train extends TransportationWay{
     private Route trainRoute;
     private String identifier;
     private int delayed;
 
-
-    public Train (String identifier, Route r) {
+    public Train (String identifier,TravelWays_Support travelWays_support,Route route) {
+        super ( identifier,travelWays_support, route);
         this.identifier = identifier;
-        this.trainRoute = r;
+        trainRoute = route;
     }
+
 
     public Route getTrainRoute () {
         return trainRoute;
-    }
-
-    public boolean isPassingNodes(Node start, Node end){
-        //trainRoute.
-        return false;
     }
 
     public void setTrainRoute (Route trainRoute) {
@@ -38,12 +37,24 @@ public class Train {
         return 0;
     }
 
+    @Override
+    public boolean isOnTime () {
+        return false;
+    }
+
+    @Override
     public String identifier () {
         return identifier;
     }
 
     public String lateBy () {
         return identifier +" is late by "+delayed+"min";
+    }
+
+    @Override
+    public boolean isPassingNode (Node node,Train n, int i) {
+        Map<Node, ArrayList<Train>> x = super.getTravelWays_support ().getPassingTrains ( node );
+        return x.get ( node ).get ( i ).equals ( n );
     }
 
     @Override

@@ -7,9 +7,18 @@ import java.util.HashMap;
 
 public class Route {
     private ArrayList<Node> route = new ArrayList<> ();
+    private AStar aStar = new AStar (this);
     private Node startNode;
     private Node endNode;
-    private Train currentTrain;
+
+    public int getTotalWeight(){
+        int x = 0;
+        for(int i = 0 ; i< route.size (); i ++){
+            if(route.size () != i+1)
+                x += route.get ( i ).getWeightForSpecific ( route.get ( i+1 ) );
+        }
+        return x;
+    }
 
     public Route () {
     }
@@ -22,9 +31,11 @@ public class Route {
         return node;
     }
 
+    public Route getRoute (Node s,Node n){
+        return aStar.getPath ( s,n );
+    }
+
     private HashMap<String, ArrayList<Node>> checkWhichTrain () {
-
-
         return null;
     }
 

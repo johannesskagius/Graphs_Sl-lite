@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class Node {
     private ArrayList<Bow> connectedNodes = new ArrayList<> ();
+    private Map<Bow, Integer> weightForNode = new HashMap<> ();
     private Position position;
     private String location;
     private boolean isVisited = false;
@@ -18,12 +19,25 @@ public class Node {
         this.location = location;
     }
 
+    public int getWeightForSpecific(Node next){
+        final int NONEXTBOW = 0;
+        Bow n;
+        for(Bow b : connectedNodes){
+            if(b.getlNode ().equals ( next )) {
+                n = b;
+                return weightForNode.get ( n );
+            }
+        }
+        return NONEXTBOW;
+    }
+
     public void setStation_info (Map<String, ArrayList<TransportationWay>> station_info) {
         this.station_info = station_info;
     }
 
     public void addBow (Node nodeTo,int weight) {
         Bow b = new Bow ( this,nodeTo,weight );
+        weightForNode.put ( b, weight );
         connectedNodes.add ( b );
     }
 

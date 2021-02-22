@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.travelBy.Train;
+import com.company.travelBy.TransportationWay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -62,7 +63,7 @@ public class Main {
 
     @Test
     public void testASTAR () {
-        AStar a = new AStar ();
+       /* AStar a = new AStar ();
         Route r = a.getPath ( nodes.get ( 'a' ),nodes.get ( 'j' ) );
         assertEquals ( nodes.get ( 'j' ),r.getEndNode () );
         Route r1 = a.getPath ( nodes.get ( 'c' ),nodes.get ( 'r' ) );
@@ -70,9 +71,15 @@ public class Main {
         Route r2 = a.getPath ( nodes.get ( 'p' ),nodes.get ( 'a' ) );
         assertEquals ( nodes.get ( 'a' ),r2.getEndNode () );
         Route r3 = a.getPath ( nodes.get ( 'e' ),nodes.get ( 't' ) );
-        assertEquals ( nodes.get ( 't' ),r3.getEndNode () );
+        assertEquals ( nodes.get ( 't' ),r3.getEndNode () );*/
     }
 
+    @Test
+    public void testRouteNASTAR(){
+        Route r = new Route ();
+        r.getRoute (nodes.get ( 'a' ), nodes.get ( 'j' ));
+        assertEquals ( nodes.get ( 'j' ),r.getEndNode () );
+    }
     @Test
     public void testBlueTrain () {
         assertEquals ( travelRoute.get ( "Blue line 1").getTrainRoute ().getNrOfStops (), 9 );
@@ -80,10 +87,8 @@ public class Main {
 
     @Test
     public void testAstar_With_Trains () {
-        Travel_Route t = new Travel_Route ();
-
-        t.getTravel_Route ( nodes.get ( 'a' ), nodes.get ( 'h' ) );
-
+        TravelWays_Support x = new TravelWays_Support ();
+        Travel_Request t = new Travel_Request (nodes.get ( 'i' ), nodes.get ( 'n' ) );
 
     }
 }

@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class AStar {
-    private Route route = new Route ();
+    private Route route;
     private Stack<Node> visitedNodes = new Stack<> ();
+
+    public AStar (Route route) {
+        this.route = route;
+    }
 
     //A* fungerar med
     public Route getPath (Node start,Node end) {
@@ -14,8 +18,10 @@ public class AStar {
         //Kolla om startnode
         while (checkIfFinish ( end,current )) {
             if (checkIfFinish ( end,current )) {
-                if(!visitedNodes.peek ().equals ( current ))
+                if(!visitedNodes.peek ().equals ( current )) {
                     visitedNodes.push ( current );
+                    current.setVisited ( true );
+                }
                 //Kolla om node har barn
                 if (current.gotChilds ()) { // Om det finns barn gå till det billigaste, ej besökta bar
                     //ArrayList<Node> r = getPath ( findCheapestChild ( current,end ),end ).getRouteArray ();

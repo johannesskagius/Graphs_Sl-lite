@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Bow {
     private Node fNode;
     private Node lNode;
@@ -23,6 +25,9 @@ public class Bow {
         return lNode;
     }
 
+    public Bow getBow(Node next){
+        return this;
+    }
     public void setlNode (Node lNode) {
         this.lNode = lNode;
     }
@@ -33,5 +38,18 @@ public class Bow {
 
     public void setWeight (int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bow)) return false;
+        Bow bow = (Bow) o;
+        return weight == bow.weight && Objects.equals ( fNode,bow.fNode ) && Objects.equals ( lNode,bow.lNode );
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash ( fNode,lNode,weight );
     }
 }
